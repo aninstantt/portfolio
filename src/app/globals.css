@@ -10,6 +10,12 @@
   background-repeat: no-repeat;
 }
 
+@media (prefers-color-scheme: dark) {
+  .old-paper {
+    background-image: none;
+  }
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255;
