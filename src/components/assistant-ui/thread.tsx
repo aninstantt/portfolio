@@ -206,7 +206,7 @@ const AssistantMessage: FC = () => {
     <MessagePrimitive.Root className="relative grid w-full max-w-[var(--thread-max-width)] grid-cols-[auto_auto_1fr] grid-rows-[auto_1fr] py-4">
       <Avatar className="col-start-1 row-span-full row-start-1 mr-4">
         <AvatarFallback>
-          <Image src="/deepseek.svg" alt="DeepSeek" width={24} height={24} className="p-1.5" />
+          <Image src="/deepseek.svg" alt="DeepSeek" width={24} height={24} />
         </AvatarFallback>
       </Avatar>
 
