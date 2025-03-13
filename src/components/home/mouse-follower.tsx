@@ -1,5 +1,5 @@
 'use client'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 const FRAME_INTERVAL = 1000 / 30
@@ -14,6 +14,7 @@ export default function MouseFollower() {
   const lastUpdateTime = useRef(0)
   const isMoving = useRef(false)
   const currentMousePos = useRef({ x: 0, y: 0 })
+  const isPageActive = useRef(true)
 
   const getRandomColor = useCallback(() => {
     return (
@@ -28,6 +29,11 @@ export default function MouseFollower() {
     let animationFrameId: number
 
     const updateParticles = (timestamp: number) => {
+      if (!isPageActive.current) {
+        animationFrameId = requestAnimationFrame(updateParticles)
+        return
+      }
+
       if (timestamp - lastUpdateTime.current >= FRAME_INTERVAL) {
         setMousePosition(currentMousePos.current)
 
@@ -51,6 +57,7 @@ export default function MouseFollower() {
     }
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (!isPageActive.current) return
       const newPos = { x: e.clientX, y: e.clientY }
       const dx = newPos.x - currentMousePos.current.x
       const dy = newPos.y - currentMousePos.current.y
@@ -60,17 +67,36 @@ export default function MouseFollower() {
       currentMousePos.current = newPos
     }
 
+    const handleVisibilityChange = () => {
+      isPageActive.current = !document.hidden
+    }
+
+    const handleMouseEnter = () => {
+      isPageActive.current = true
+    }
+
+    const handleMouseLeave = () => {
+      isPageActive.current = false
+      setParticles([])
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    document.addEventListener('mouseenter', handleMouseEnter)
+    document.addEventListener('mouseleave', handleMouseLeave)
     window.addEventListener('mousemove', handleMouseMove)
     animationFrameId = requestAnimationFrame(updateParticles)
 
     return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      document.removeEventListener('mouseenter', handleMouseEnter)
+      document.removeEventListener('mouseleave', handleMouseLeave)
       window.removeEventListener('mousemove', handleMouseMove)
       cancelAnimationFrame(animationFrameId)
     }
   }, [])
 
   return (
-    <>
+    <AnimatePresence>
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
@@ -94,7 +120,7 @@ export default function MouseFollower() {
             rotate: Math.random() * 360
           }}
           transition={{
-            duration: 1.2,
+            duration: PARTICLE_LIFETIME / 1000,
             ease: 'easeOut'
           }}
         >
@@ -121,6 +147,6 @@ export default function MouseFollower() {
           stiffness: 200
         }}
       />
-    </>
+    </AnimatePresence>
   )
 }
