@@ -15,6 +15,11 @@ export default function About() {
 
   const sections: Section[] = [
     {
+      title: '性格',
+      icon: <RiNetflixFill className="mr-2 text-purple-500" />,
+      content: ['内敛，沉稳，有责任心，', '做事认真，不断提升自己']
+    },
+    {
       title: '技术栈',
       icon: <RiCodeBoxFill className="mr-2 text-blue-500" />,
       content: ['React, Next.js, Node.js,', 'Python, Go, Dart,', 'PostgreSQL, Redis 等']
@@ -27,12 +32,7 @@ export default function About() {
     {
       title: '闲时干点啥',
       icon: <RiCupFill className="mr-2 text-rose-500" />,
-      content: ['看游戏直播，听音乐，刷剧，', '捣鼓一些可能没用的软件']
-    },
-    {
-      title: '最近在追的剧',
-      icon: <RiNetflixFill className="mr-2 text-purple-500" />,
-      content: ['Severance，黑道家族']
+      content: ['看游戏直播，听音乐，刷剧，', '捣鼓一些乱七八糟的工具']
     }
   ]
 

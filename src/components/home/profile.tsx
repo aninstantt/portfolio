@@ -28,6 +28,12 @@ export default function Profile() {
       </div>
 
       <div className="flex w-fit gap-4 whitespace-nowrap text-sm opacity-60">
+        <a href="https://blog.severance.cc" className='profile-link group'>
+          <AnimatedText
+            text="Blog"
+            className="cursor-pointer transition-all duration-300 group-hover:translate-y-[-2px] group-hover:opacity-100"
+          />
+        </a>
         <a href="https://github.com/aninstantt" className="profile-link group">
           <AnimatedText
             text="GitHub"
